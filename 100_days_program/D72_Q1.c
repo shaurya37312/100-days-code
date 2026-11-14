@@ -1,31 +1,26 @@
-// Write a C program to sort an array in ascending order using bubble sort.
+// Write a C program that opens an existing file (e.g., info.txt) and reads its contents using fgets(). The program should print all the lines to the console until EOF (end of file) is reached.
 
 #include <stdio.h>
 
 int main()
 {
-    int n, a[100], temp;
+    FILE *fp;
+    char line[200];
 
-    scanf("%d", &n);
+    fp = fopen("info.txt", "r");
 
-    for (int i = 0; i < n; i++)
-        scanf("%d", &a[i]);
-
-    for (int i = 0; i < n - 1; i++)
+    if (fp == NULL)
     {
-        for (int j = 0; j < n - i - 1; j++)
-        {
-            if (a[j] > a[j + 1])
-            {
-                temp = a[j];
-                a[j] = a[j + 1];
-                a[j + 1] = temp;
-            }
-        }
+        printf("Error opening file!");
+        return 1;
     }
 
-    for (int i = 0; i < n; i++)
-        printf("%d ", a[i]);
+    while (fgets(line, sizeof(line), fp) != NULL)
+    {
+        printf("%s", line);
+    }
+
+    fclose(fp);
 
     return 0;
 }
