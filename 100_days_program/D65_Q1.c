@@ -1,35 +1,38 @@
-// Write a C program to store and display details of multiple students using an array of structures.
+// Write a program to take two strings s and t as inputs (assume all characters are lowercase). The task is to determine if s and t are valid anagrams, meaning they contain the same characters with the same frequencies. Print "Anagram" if they are, otherwise "Not Anagram".
 
 #include <stdio.h>
-
-struct Student
-{
-    int roll;
-    char name[50];
-    float marks;
-};
+#include <string.h>
 
 int main()
 {
-    struct Student s[100];
-    int n;
+    char s[1000], t[1000];
+    int frequency[26] = {0};
 
-    scanf("%d", &n);
+    scanf("%s", s);
+    scanf("%s", t);
 
-    for (int i = 0; i < n; i++)
+    if (strlen(s) != strlen(t))
     {
-        scanf("%d", &s[i].roll);
-        scanf("%49s", s[i].name);
-        scanf("%f", &s[i].marks);
+        printf("Not Anagram");
+        return 0;
     }
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; s[i] != '\0'; i++)
+        frequency[s[i] - 'a']++;
+
+    for (int i = 0; t[i] != '\0'; i++)
+        frequency[t[i] - 'a']--;
+
+    for (int i = 0; i < 26; i++)
     {
-        printf("%d %s %.2f\n",
-               s[i].roll,
-               s[i].name,
-               s[i].marks);
+        if (frequency[i] != 0)
+        {
+            printf("Not Anagram");
+            return 0;
+        }
     }
+
+    printf("Anagram");
 
     return 0;
 }
