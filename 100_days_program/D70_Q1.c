@@ -1,39 +1,23 @@
-// Write a C program to dynamically allocate memory for n integers using calloc() and display the elements.
+// Write a program to take a string input. Change it to sentence case.
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
 
 int main()
 {
-    int n;
-    int *arr;
+    char str[500];
 
-    scanf("%d", &n);
+    fgets(str, sizeof(str), stdin);
+    str[strcspn(str, "\n")] = '\0';
 
-    arr = (int *)calloc(n, sizeof(int));
+    if (str[0] != '\0')
+        str[0] = toupper((unsigned char)str[0]);
 
-    if (arr == NULL)
-    {
-        printf("Memory allocation failed");
-        return 1;
-    }
+    for (int i = 1; str[i] != '\0'; i++)
+        str[i] = tolower((unsigned char)str[i]);
 
-    printf("Initial values:\n");
-
-    for (int i = 0; i < n; i++)
-        printf("%d ", arr[i]);
-
-    printf("\nEnter values:\n");
-
-    for (int i = 0; i < n; i++)
-        scanf("%d", &arr[i]);
-
-    printf("Entered values:\n");
-
-    for (int i = 0; i < n; i++)
-        printf("%d ", arr[i]);
-
-    free(arr);
+    printf("%s", str);
 
     return 0;
 }
