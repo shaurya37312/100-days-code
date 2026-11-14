@@ -1,24 +1,32 @@
-// Write a C program to find the length of a string using a pointer.
+// Write a program to take an integer array arr and an integer k as inputs. The task is to find the kth smallest element in the array. Print the kth smallest element as output.
 
 #include <stdio.h>
 
 int main()
 {
-    char str[100];
-    char *ptr;
-    int length = 0;
+    int n, arr[100], k, temp;
 
-    scanf("%99s", str);
+    scanf("%d", &n);
 
-    ptr = str;
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
 
-    while (*ptr != '\0')
+    scanf("%d", &k);
+
+    for (int i = 0; i < n - 1; i++)
     {
-        length++;
-        ptr++;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (arr[i] > arr[j])
+            {
+                temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
     }
 
-    printf("%d", length);
+    printf("%d", arr[k - 1]);
 
     return 0;
 }
