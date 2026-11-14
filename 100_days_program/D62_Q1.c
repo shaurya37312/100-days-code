@@ -1,32 +1,31 @@
-// Write a C program to reverse an array using pointers.
+// Write a program to take an integer array arr as input. The task is to find the maximum sum of any contiguous subarray using Kadane's algorithm. Print the maximum sum as output. If all elements are negative, print the largest (least negative) element.
 
 #include <stdio.h>
 
 int main()
 {
-    int n, a[100];
-    int *start, *end, temp;
+    int n, arr[100];
 
     scanf("%d", &n);
 
     for (int i = 0; i < n; i++)
-        scanf("%d", &a[i]);
+        scanf("%d", &arr[i]);
 
-    start = a;
-    end = a + n - 1;
+    int currentSum = arr[0];
+    int maxSum = arr[0];
 
-    while (start < end)
+    for (int i = 1; i < n; i++)
     {
-        temp = *start;
-        *start = *end;
-        *end = temp;
+        if (currentSum + arr[i] > arr[i])
+            currentSum = currentSum + arr[i];
+        else
+            currentSum = arr[i];
 
-        start++;
-        end--;
+        if (currentSum > maxSum)
+            maxSum = currentSum;
     }
 
-    for (int i = 0; i < n; i++)
-        printf("%d ", a[i]);
+    printf("%d", maxSum);
 
     return 0;
 }
