@@ -1,25 +1,38 @@
-// Write a C program to store and display student details using a structure.
+// Write a program to take a string s as input. The task is to find the length of the longest substring without repeating characters. Print the length as output.
 
 #include <stdio.h>
-
-struct Student
-{
-    int roll;
-    char name[50];
-    float marks;
-};
+#include <string.h>
 
 int main()
 {
-    struct Student s;
+    char s[1000];
+    int last[256];
 
-    scanf("%d", &s.roll);
-    scanf("%49s", s.name);
-    scanf("%f", &s.marks);
+    fgets(s, sizeof(s), stdin);
+    s[strcspn(s, "\n")] = '\0';
 
-    printf("Roll Number: %d\n", s.roll);
-    printf("Name: %s\n", s.name);
-    printf("Marks: %.2f\n", s.marks);
+    for (int i = 0; i < 256; i++)
+        last[i] = -1;
+
+    int start = 0;
+    int maxLength = 0;
+
+    for (int i = 0; s[i] != '\0'; i++)
+    {
+        unsigned char ch = s[i];
+
+        if (last[ch] >= start)
+            start = last[ch] + 1;
+
+        last[ch] = i;
+
+        int length = i - start + 1;
+
+        if (length > maxLength)
+            maxLength = length;
+    }
+
+    printf("%d", maxLength);
 
     return 0;
 }
