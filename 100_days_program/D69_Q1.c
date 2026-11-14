@@ -1,33 +1,27 @@
-// Write a C program to dynamically allocate memory for n integers using malloc() and find their sum.
+// Write a program to take an integer array as input. Only one element will be repeated. Print the repeated element. Try to find the result in one single iteration.
 
 #include <stdio.h>
-#include <stdlib.h>
 
 int main()
 {
-    int n;
-    int *arr;
-    int sum = 0;
+    int n, arr[100];
+    int seen[1001] = {0};
 
     scanf("%d", &n);
-
-    arr = (int *)malloc(n * sizeof(int));
-
-    if (arr == NULL)
-    {
-        printf("Memory allocation failed");
-        return 1;
-    }
 
     for (int i = 0; i < n; i++)
         scanf("%d", &arr[i]);
 
     for (int i = 0; i < n; i++)
-        sum += arr[i];
+    {
+        if (seen[arr[i]] == 1)
+        {
+            printf("%d", arr[i]);
+            return 0;
+        }
 
-    printf("%d", sum);
-
-    free(arr);
+        seen[arr[i]] = 1;
+    }
 
     return 0;
 }
