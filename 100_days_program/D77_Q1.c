@@ -1,49 +1,39 @@
-// Write a C program to multiply two matrices.
+// Write a program that reads text from input.txt, converts all lowercase letters to uppercase, and writes the result to output.txt.
 
 #include <stdio.h>
+#include <ctype.h>
 
 int main()
 {
-    int r1, c1, r2, c2;
-    int a[10][10], b[10][10], result[10][10] = {0};
+    FILE *input;
+    FILE *output;
+    int ch;
 
-    scanf("%d %d", &r1, &c1);
-    scanf("%d %d", &r2, &c2);
+    input = fopen("input.txt", "r");
 
-    if (c1 != r2)
+    if (input == NULL)
     {
-        printf("Matrix multiplication not possible");
-        return 0;
+        printf("Error opening input.txt");
+        return 1;
     }
 
-    for (int i = 0; i < r1; i++)
+    output = fopen("output.txt", "w");
+
+    if (output == NULL)
     {
-        for (int j = 0; j < c1; j++)
-            scanf("%d", &a[i][j]);
+        printf("Error opening output.txt");
+        fclose(input);
+        return 1;
     }
 
-    for (int i = 0; i < r2; i++)
+    while ((ch = fgetc(input)) != EOF)
     {
-        for (int j = 0; j < c2; j++)
-            scanf("%d", &b[i][j]);
+        ch = toupper((unsigned char)ch);
+        fputc(ch, output);
     }
 
-    for (int i = 0; i < r1; i++)
-    {
-        for (int j = 0; j < c2; j++)
-        {
-            for (int k = 0; k < c1; k++)
-                result[i][j] += a[i][k] * b[k][j];
-        }
-    }
-
-    for (int i = 0; i < r1; i++)
-    {
-        for (int j = 0; j < c2; j++)
-            printf("%d ", result[i][j]);
-
-        printf("\n");
-    }
+    fclose(input);
+    fclose(output);
 
     return 0;
 }
