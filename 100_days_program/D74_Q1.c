@@ -1,32 +1,43 @@
-// Write a C program to sort an array in ascending order using insertion sort.
+// Take two filenames from the user – a source file and a destination file. Copy all the content from the source file to the destination file using fgetc() and fputc().
 
 #include <stdio.h>
 
 int main()
 {
-    int n, a[100];
+    FILE *source, *destination;
+    char sourceName[100];
+    char destinationName[100];
+    int ch;
 
-    scanf("%d", &n);
+    scanf("%99s", sourceName);
+    scanf("%99s", destinationName);
 
-    for (int i = 0; i < n; i++)
-        scanf("%d", &a[i]);
+    source = fopen(sourceName, "r");
 
-    for (int i = 1; i < n; i++)
+    if (source == NULL)
     {
-        int key = a[i];
-        int j = i - 1;
-
-        while (j >= 0 && a[j] > key)
-        {
-            a[j + 1] = a[j];
-            j--;
-        }
-
-        a[j + 1] = key;
+        printf("Error opening source file!");
+        return 1;
     }
 
-    for (int i = 0; i < n; i++)
-        printf("%d ", a[i]);
+    destination = fopen(destinationName, "w");
+
+    if (destination == NULL)
+    {
+        printf("Error opening destination file!");
+        fclose(source);
+        return 1;
+    }
+
+    while ((ch = fgetc(source)) != EOF)
+    {
+        fputc(ch, destination);
+    }
+
+    fclose(source);
+    fclose(destination);
+
+    printf("File copied successfully to %s", destinationName);
 
     return 0;
 }
