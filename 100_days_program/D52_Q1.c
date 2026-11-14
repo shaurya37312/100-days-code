@@ -1,31 +1,38 @@
-// Write a C program to check whether a number is prime using a function.
+// Write a Program to take a sorted array arr[] and an integer x as input, find the index (0-based) of the smallest element in arr[] that is greater than or equal to x and print it. This element is called the ceil of x. If such an element does not exist, print -1. Note: In case of multiple occurrences of ceil of x, return the index of the first occurrence.
 
 #include <stdio.h>
 
-int isPrime(int n)
-{
-    if (n < 2)
-        return 0;
-
-    for (int i = 2; i * i <= n; i++)
-    {
-        if (n % i == 0)
-            return 0;
-    }
-
-    return 1;
-}
-
 int main()
 {
-    int n;
+    int n, arr[100], x;
+    int low = 0, high, mid;
+    int ans = -1;
 
     scanf("%d", &n);
 
-    if (isPrime(n))
-        printf("Prime");
-    else
-        printf("Not Prime");
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    scanf("%d", &x);
+
+    high = n - 1;
+
+    while (low <= high)
+    {
+        mid = (low + high) / 2;
+
+        if (arr[mid] >= x)
+        {
+            ans = mid;
+            high = mid - 1;
+        }
+        else
+        {
+            low = mid + 1;
+        }
+    }
+
+    printf("%d", ans);
 
     return 0;
 }
