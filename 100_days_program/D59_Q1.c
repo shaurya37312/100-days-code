@@ -1,25 +1,33 @@
-// Write a C program to swap two numbers using pointers.
+// Write a program to take an integer array arr and an integer k as inputs. Print the maximum sum of all the subarrays of size k.
 
 #include <stdio.h>
 
-void swap(int *a, int *b)
-{
-    int temp;
-
-    temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
 int main()
 {
-    int a, b;
+    int n, arr[100], k;
+    int sum = 0, maxSum;
 
-    scanf("%d %d", &a, &b);
+    scanf("%d", &n);
 
-    swap(&a, &b);
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
 
-    printf("%d %d", a, b);
+    scanf("%d", &k);
+
+    for (int i = 0; i < k; i++)
+        sum += arr[i];
+
+    maxSum = sum;
+
+    for (int i = k; i < n; i++)
+    {
+        sum = sum + arr[i] - arr[i - k];
+
+        if (sum > maxSum)
+            maxSum = sum;
+    }
+
+    printf("%d", maxSum);
 
     return 0;
 }
