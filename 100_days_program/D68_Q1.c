@@ -1,26 +1,23 @@
-// Write a C program to demonstrate the use of a union.
+// Write a program to take an input array of size n. The array should contain all the integers between 0 to n except for one. Print that missing number
 
 #include <stdio.h>
 
-union Data
-{
-    int integer;
-    float decimal;
-    char character;
-};
-
 int main()
 {
-    union Data data;
+    int n, arr[100];
+    long long sum = 0;
 
-    data.integer = 25;
-    printf("Integer: %d\n", data.integer);
+    scanf("%d", &n);
 
-    data.decimal = 15.5;
-    printf("Float: %.2f\n", data.decimal);
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &arr[i]);
+        sum += arr[i];
+    }
 
-    data.character = 'A';
-    printf("Character: %c\n", data.character);
+    long long expectedSum = (long long)n * (n + 1) / 2;
+
+    printf("%lld", expectedSum - sum);
 
     return 0;
 }
