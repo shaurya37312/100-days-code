@@ -1,27 +1,36 @@
-// Write a C program to find the maximum element in an array using pointers.
+// Write a program to take an integer array arr and an integer k as inputs. The task is to find the first negative integer in each subarray of size k moving from left to right. If no negative exists in a window, print "0" for that window. Print the results separated by spaces as output.
 
 #include <stdio.h>
 
 int main()
 {
-    int n, a[100];
-    int *ptr, max;
+    int n, arr[100], k;
 
     scanf("%d", &n);
 
     for (int i = 0; i < n; i++)
-        scanf("%d", &a[i]);
+        scanf("%d", &arr[i]);
 
-    ptr = a;
-    max = *ptr;
+    scanf("%d", &k);
 
-    for (int i = 1; i < n; i++)
+    for (int i = 0; i <= n - k; i++)
     {
-        if (*(ptr + i) > max)
-            max = *(ptr + i);
-    }
+        int negative = 0;
 
-    printf("%d", max);
+        for (int j = i; j < i + k; j++)
+        {
+            if (arr[j] < 0)
+            {
+                negative = arr[j];
+                break;
+            }
+        }
+
+        printf("%d", negative);
+
+        if (i < n - k)
+            printf(" ");
+    }
 
     return 0;
 }
