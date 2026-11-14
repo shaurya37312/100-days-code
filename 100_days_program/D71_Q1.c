@@ -1,49 +1,29 @@
-// Write a C program to resize a dynamically allocated array using realloc().
+// Write a C program that creates a text file named info.txt in write mode. The program should take the user’s name and age as input, and write them to the file using fprintf(). After writing, display a message confirming that the data was successfully saved.
 
 #include <stdio.h>
-#include <stdlib.h>
 
 int main()
 {
-    int n, newSize;
-    int *arr;
+    FILE *fp;
+    char name[50];
+    int age;
 
-    scanf("%d", &n);
+    fp = fopen("info.txt", "w");
 
-    arr = (int *)malloc(n * sizeof(int));
-
-    if (arr == NULL)
+    if (fp == NULL)
     {
-        printf("Memory allocation failed");
+        printf("Error opening file!");
         return 1;
     }
 
-    for (int i = 0; i < n; i++)
-        scanf("%d", &arr[i]);
+    scanf("%49s", name);
+    scanf("%d", &age);
 
-    scanf("%d", &newSize);
+    fprintf(fp, "Name: %s\nAge: %d", name, age);
 
-    int *temp = (int *)realloc(arr, newSize * sizeof(int));
+    fclose(fp);
 
-    if (temp == NULL)
-    {
-        printf("Memory allocation failed");
-        free(arr);
-        return 1;
-    }
-
-    arr = temp;
-
-    if (newSize > n)
-    {
-        for (int i = n; i < newSize; i++)
-            scanf("%d", &arr[i]);
-    }
-
-    for (int i = 0; i < newSize; i++)
-        printf("%d ", arr[i]);
-
-    free(arr);
+    printf("File created successfully! Data written to info.txt");
 
     return 0;
 }
