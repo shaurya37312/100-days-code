@@ -1,37 +1,31 @@
-// Write a C program to find the employee with the highest salary using structures.
+// Write a program to take an integer array nums which contains only positive integers, and an integer target as inputs. The goal is to find two distinct indices i and j in the array such that nums[i] + nums[j] equals the target. Assume exactly one solution exists and return the indices in any order. Print the two indices separated by a space as output. If no solution exists, print "-1 -1".
 
 #include <stdio.h>
 
-struct Employee
-{
-    int id;
-    char name[50];
-    float salary;
-};
-
 int main()
 {
-    struct Employee e[100];
-    int n, maxIndex = 0;
+    int n, nums[100], target;
 
     scanf("%d", &n);
 
     for (int i = 0; i < n; i++)
+        scanf("%d", &nums[i]);
+
+    scanf("%d", &target);
+
+    for (int i = 0; i < n - 1; i++)
     {
-        scanf("%d", &e[i].id);
-        scanf("%49s", e[i].name);
-        scanf("%f", &e[i].salary);
+        for (int j = i + 1; j < n; j++)
+        {
+            if (nums[i] + nums[j] == target)
+            {
+                printf("%d %d", i, j);
+                return 0;
+            }
+        }
     }
 
-    for (int i = 1; i < n; i++)
-    {
-        if (e[i].salary > e[maxIndex].salary)
-            maxIndex = i;
-    }
-
-    printf("ID: %d\n", e[maxIndex].id);
-    printf("Name: %s\n", e[maxIndex].name);
-    printf("Salary: %.2f\n", e[maxIndex].salary);
+    printf("-1 -1");
 
     return 0;
 }
