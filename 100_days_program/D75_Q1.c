@@ -1,46 +1,29 @@
-// Write a C program to search for an element in a sorted array using binary search.
+// Open an existing file in append mode and allow the user to enter a new line of text. Append the text at the end without overwriting existing content.
 
 #include <stdio.h>
+#include <string.h>
 
 int main()
 {
-    int n, a[100], key;
-    int low, high, mid;
-    int found = -1;
+    FILE *fp;
+    char text[500];
 
-    scanf("%d", &n);
+    fp = fopen("data.txt", "a");
 
-    for (int i = 0; i < n; i++)
-        scanf("%d", &a[i]);
-
-    scanf("%d", &key);
-
-    low = 0;
-    high = n - 1;
-
-    while (low <= high)
+    if (fp == NULL)
     {
-        mid = (low + high) / 2;
-
-        if (a[mid] == key)
-        {
-            found = mid;
-            break;
-        }
-        else if (a[mid] < key)
-        {
-            low = mid + 1;
-        }
-        else
-        {
-            high = mid - 1;
-        }
+        printf("Error opening file!");
+        return 1;
     }
 
-    if (found != -1)
-        printf("Element found at position %d", found + 1);
-    else
-        printf("Element not found");
+    fgets(text, sizeof(text), stdin);
+    text[strcspn(text, "\n")] = '\0';
+
+    fprintf(fp, "\n%s", text);
+
+    fclose(fp);
+
+    printf("File updated successfully with appended text.");
 
     return 0;
 }
