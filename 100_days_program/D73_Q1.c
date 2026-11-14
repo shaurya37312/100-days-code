@@ -1,33 +1,53 @@
-// Write a C program to sort an array in ascending order using selection sort.
+// Read a text file and count the total number of characters, words, and lines. A word is defined as a sequence of non-space characters separated by spaces or newlines.
 
 #include <stdio.h>
+#include <ctype.h>
 
 int main()
 {
-    int n, a[100], temp, minIndex;
+    FILE *fp;
+    char ch;
+    int characters = 0;
+    int words = 0;
+    int lines = 0;
+    int inWord = 0;
+    int lastChar = '\0';
 
-    scanf("%d", &n);
+    fp = fopen("sample.txt", "r");
 
-    for (int i = 0; i < n; i++)
-        scanf("%d", &a[i]);
-
-    for (int i = 0; i < n - 1; i++)
+    if (fp == NULL)
     {
-        minIndex = i;
-
-        for (int j = i + 1; j < n; j++)
-        {
-            if (a[j] < a[minIndex])
-                minIndex = j;
-        }
-
-        temp = a[i];
-        a[i] = a[minIndex];
-        a[minIndex] = temp;
+        printf("Error opening file!");
+        return 1;
     }
 
-    for (int i = 0; i < n; i++)
-        printf("%d ", a[i]);
+    while ((ch = fgetc(fp)) != EOF)
+    {
+        characters++;
+        lastChar = ch;
+
+        if (ch == '\n')
+            lines++;
+
+        if (isspace((unsigned char)ch))
+        {
+            inWord = 0;
+        }
+        else if (inWord == 0)
+        {
+            words++;
+            inWord = 1;
+        }
+    }
+
+    if (characters > 0 && lastChar != '\n')
+        lines++;
+
+    fclose(fp);
+
+    printf("Characters: %d\n", characters);
+    printf("Words: %d\n", words);
+    printf("Lines: %d", lines);
 
     return 0;
 }
