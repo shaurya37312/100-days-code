@@ -1,26 +1,30 @@
-// Write a C program to find the GCD of two numbers using a function.
+// Write a Program to take a positive integer n as input, and find the pivot integer x such that the sum of all elements between 1 and x inclusively equals the sum of all elements between x and n inclusively. Print the pivot integer x. If no such integer exists, print -1. Assume that it is guaranteed that there will be at most one pivot integer for the given input.
 
 #include <stdio.h>
 
-int gcd(int a, int b)
-{
-    while (b != 0)
-    {
-        int temp = b;
-        b = a % b;
-        a = temp;
-    }
-
-    return a;
-}
-
 int main()
 {
-    int a, b;
+    int n;
 
-    scanf("%d %d", &a, &b);
+    scanf("%d", &n);
 
-    printf("%d", gcd(a, b));
+    int total = n * (n + 1) / 2;
+    int leftSum = 0;
+
+    for (int x = 1; x <= n; x++)
+    {
+        leftSum += x;
+
+        int rightSum = total - (x * (x - 1) / 2);
+
+        if (leftSum == rightSum)
+        {
+            printf("%d", x);
+            return 0;
+        }
+    }
+
+    printf("-1");
 
     return 0;
 }
