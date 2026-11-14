@@ -1,27 +1,31 @@
-// Write a C program to find the transpose of a matrix.
+// Ask the user for a filename. Check if it exists by trying to open it in read mode. If the file pointer is NULL, print an error message; otherwise, read and display its content.
 
 #include <stdio.h>
 
 int main()
 {
-    int rows, cols;
-    int a[10][10];
+    FILE *fp;
+    char filename[100];
+    char line[200];
 
-    scanf("%d %d", &rows, &cols);
+    scanf("%99s", filename);
 
-    for (int i = 0; i < rows; i++)
+    fp = fopen(filename, "r");
+
+    if (fp == NULL)
     {
-        for (int j = 0; j < cols; j++)
-            scanf("%d", &a[i][j]);
+        printf("Error: File does not exist!");
+        return 1;
     }
 
-    for (int i = 0; i < cols; i++)
-    {
-        for (int j = 0; j < rows; j++)
-            printf("%d ", a[j][i]);
+    printf("File opened successfully.\n");
 
-        printf("\n");
+    while (fgets(line, sizeof(line), fp) != NULL)
+    {
+        printf("%s", line);
     }
+
+    fclose(fp);
 
     return 0;
 }
